@@ -1,3 +1,4 @@
+won=0
 class Room:
 
     def __init__(self, name):
@@ -39,7 +40,7 @@ class Enemy:
         self.description = description
         self.weakness=None
         self.conversation=None
-        self.defeated=0
+        self.defeated=won
         
     def set_conversation(self, conversation):
         self.conversation=conversation
@@ -52,7 +53,9 @@ class Enemy:
 
     def fight(self, item):
         if item==self.weakness:
-            self.defeated+=1
+            global won 
+            won+=1
+            self.defeated=won
             print(f'You fend {self.name} off with the {item}')
             return True
         print(f'{self.name} crushes you, puny adventurer!')
@@ -76,10 +79,3 @@ class Item:
 
     def get_name(self):
         return self.name
-
-    
-    
-        
-
-
-        
