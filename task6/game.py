@@ -1,135 +1,112 @@
-import game
+won=0
+class Street:
 
-kozelnytska = game.Street("Kozelnytska")
-kozelnytska.set_description("A homeland for UCU students")
+    def __init__(self, name):
+        self.name = name
+        self.rooms={}
+        self.character=None
+        self.item=None
 
-stryjska = game.Street("Stryjska")
-stryjska.set_description("A large street")
+    def set_description(self, description):
+        self.description=description
 
-shewchenka= game.Street("Shewczenka")
-shewchenka.set_description("A quite tiny street")
+    def link_room(self, room, direction):
+        self.rooms[direction]=room
 
-franka=game.Street('Franka')
-franka.set_description('A very crowded street')
+    def set_character(self, character):
+        self.character=character
 
-krakiwska=game.Street('Your half way')
+    def set_item(self, item):
+        self.item=item
 
-kozelnytska.link_room(stryjska, "up")
-kozelnytska.link_room(shewchenka, "down")
-stryjska.link_room(kozelnytska, "down")
-stryjska.link_room(franka, "up")
-franka.link_room(stryjska, "down")
-franka.link_room(krakiwska, 'up')
-krakiwska.link_room(franka, 'down')
-krakiwska.limk_room(shewchenka, 'up')
-shewchenka.link_room(krakiwska, 'down')
-shewchenka.link_room(kozelnytska, 'up')
+    def get_character(self):
+        return self.character
 
-student=game.Friend('Jake', "an UCU student")
-student.set_conversation("I will give my soul for a book")
-student.set_weakness('book')
-kozelnytska.set_character(student)
+    def get_item(self):
+        return self.item
 
+    def move(self, direction):
+        return self.rooms[direction]
 
+    def get_details(self):
+        directions=''
+        for item in self.rooms:
+            directions+=f'The {self.rooms[item].name} is {item}\n'
+        print(f'{self.name}\n--------------------\n{self.description}\n{directions[:-1]}')
+class Character:
 
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+        self.weakness=None
+        self.conversation=None
+        self.defeated=won
+        
+    def set_conversation(self, conversation):
+        self.conversation=conversation
 
-lotr = game.Enemy("Dave", "A smelly zombie")
-lotr.set_conversation("What's up, dude! I'm hungry.")
-lotr.set_weakness("umbrella")
-stryjska.set_character(lotr)
+    def set_weakness(self, weakness):
+        self.weakness=weakness
 
-batiar = game.Enemy("Tabitha", "An enormous spider with countless eyes and furry legs.")
-batiar.set_conversation("Sssss....I'm so bored...")
-batiar.set_weakness("cheese")
-franka.set_character(batiar)
+    def talk(self):
+        print(f'[{self.name} says]: {self.conversation}')
 
-laidak=game.Enemy('Boss', "I'm afraid of students")
-laidak.set_conversation("heloo...")
-laidak.set_weakness('student')
-krakiwska.set_character(laidak)
+    def get_defeated(self):
+        return self.defeated
 
-kavalier=game.Enemy("Boy", "i love smth sweet")
-kavalier.set_conversation("How are u?")
-kavalier.set_weakness('chocolate')
+    def describe(self):
+        print(f"{self.name} is here!\n{self.description}")
 
-stone=game.Support('stone')
-stone.set_description("With this stone u can defeat everybody")
-franka.set_item(stone)
+class Friend(Character):
+    def __init__(self, name, description):
+        super().__init__(name, description)
 
-cheese = game.Support("cheese")
-cheese.set_description("A large and smelly block of cheese")
-shewchenka.set_item(cheese)
+    def go_with_me(self, item):
+        if item==self.weakness:
+            print(f'You fend {self.name} off with the {item}')
+            return True
+        print(f'{self.name} cant go with you, puny adventurer!')
 
-book = game.Support("book")
-book.set_description("A really good book entitled 'Knitting for dummies'")
-stryjska.set_item(book)
+        
 
-chocolate = game.Support("chocolate")
-cheese.set_description("A large and smelly block of chocolate")
-franka.set_item(chocolate)
+class Enemy(Character):
+    def __init__(self, name, description):
+        super().__init__(name, description)
 
-umbrella = game.Weapon("umbrella")
-cheese.set_description("The most powerfull weapon")
-kozelnytska.set_item(umbrella)
+    def fight(self, item):
+        if item==self.weakness:
+            global won 
+            won+=1
+            self.defeated=won
+            print(f'You fend {self.name} off with the {item}')
+            return True
+        print(f'{self.name} crushes you, puny adventurer!')
 
-current_street = kozelnytska
-backpack = []
+class Item:
+    def __init__(self, name):
+        self.name = name
+        self.description=None
+        
+    def set_description(self, description):
+        self.description=description
+    
+    def describe(self):
+        print(f"The [{self.name}] is here - {self.description}")
 
-dead = False
+    def get_name(self):
+        return self.name
 
-while dead == False:
+class Support(Item):
+    def __init__(self, name):
+        super().__init__(name)
 
-    print("\n")
-    current_street.get_details()
+    def describe(self):
+        print(f"The support [{self.name}] is here - {self.description}")
+        
 
-    inhabitant = current_street.get_character()
-    if inhabitant is not None:
-        inhabitant.describe()
+class Weapon(Item):
+    def __init__(self, name):
+        super().__init__(name)
 
-    item = current_room.get_item()
-    if item is not None:
-        item.describe()
-
-    command = input("> ")
-
-    if command in ["up", "down"]:
-        # Move in the given direction
-        current_room = current_room.move(command)
-    elif command == "talk":
-        # Talk to the inhabitant - check whether there is one!
-        if inhabitant is not None:
-            inhabitant.talk()
-    elif command == "fight":
-        if inhabitant is not None:
-            # Fight with the inhabitant, if there is one
-            print("What will you fight with?")
-            fight_with = input()
-
-            # Do I have this item?
-            if fight_with in backpack:
-
-                if inhabitant.fight(fight_with) == True:
-                    # What happens if you win?
-                    print("Hooray, you won the fight!")
-                    current_room.character = None
-                    if inhabitant.get_defeated() == 2:
-                        print("Congratulations, you have vanquished the enemy horde!")
-                        dead = True
-                else:
-                    # What happens if you lose?
-                    print("Oh dear, you lost the fight.")
-                    print("That's the end of the game")
-                    dead = True
-            else:
-                print("You don't have a " + fight_with)
-        else:
-            print("There is no one here to fight with")
-    elif command == "take":
-        if item is not None:
-            print("You put the " + item.get_name() + " in your backpack")
-            backpack.append(item.get_name())
-            current_room.set_item(None)
-        else:
-            print("There's nothing here to take!")
-    else:
-        print("I don't know how to " + command)
+    def describe(self):
+        print(f"The [{self.name}] weapon is here - {self.description}")

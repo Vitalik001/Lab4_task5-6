@@ -1,0 +1,108 @@
+Kozelnytska
+--------------------
+A homeland for UCU students
+The Stryjska is up
+The Shewczenka is down
+Jake is here!
+an UCU student
+The [umbrella] weapon is here - None
+> up
+
+
+Stryjska
+--------------------
+A large street
+The Kozelnytska is down
+The Franka is up
+Dave is here!
+A smelly zombie
+The support [book] is here - A really good book entitled 'Knitting for dummies'
+> take
+You put the book in your backpack
+
+
+Stryjska
+--------------------
+A large street
+The Kozelnytska is down
+The Franka is up
+Dave is here!
+A smelly zombie
+> down 
+
+
+Kozelnytska
+--------------------
+A homeland for UCU students
+The Stryjska is up
+The Shewczenka is down
+Jake is here!
+an UCU student
+The [umbrella] weapon is here - None
+> fight
+What do u can offer?
+book
+You fend Jake off with the book
+Hooray, I will come with u!
+
+
+Kozelnytska
+--------------------
+A homeland for UCU students
+The Stryjska is up
+The Shewczenka is down
+The [umbrella] weapon is here - None
+> up
+
+
+Stryjska
+--------------------
+A large street
+The Kozelnytska is down
+The Franka is up
+Dave is here!
+A smelly zombie
+> up
+
+
+Franka
+--------------------
+A very crowded street
+The Stryjska is down
+The krakiwska is up
+Tabitha is here!
+An enormous spider with countless eyes and furry legs.
+The support [chocolate] is here - None
+> up
+
+
+krakiwska
+--------------------
+Your half way
+The Franka is down
+The Shewczenka is up
+Boss is here!
+I'm afraid of students
+> fight
+What will you fight with?
+Jake
+You fend Boss off with the Jake
+Hooray, you won the fight!
+
+
+krakiwska
+--------------------
+Your half way
+The Franka is down
+The Shewczenka is up
+> up
+
+
+Shewczenka
+--------------------
+A quite tiny street
+The krakiwska is down
+The Kozelnytska is up
+The support [cheese] is here - The most powerfull weapon
+> up
+Congratulations, u won the game
